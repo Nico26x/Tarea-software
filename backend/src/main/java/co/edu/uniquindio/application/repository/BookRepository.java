@@ -1,5 +1,7 @@
 package co.edu.uniquindio.application.repository;
 
-public class BookRepository {
-    
+import co.edu.uniquindio.application.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BookRepository extends JpaRepository<Book, Long> {
 }

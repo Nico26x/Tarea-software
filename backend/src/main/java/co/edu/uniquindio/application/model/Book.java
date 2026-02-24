@@ -20,7 +20,7 @@ public class Book {
 
     private Double calificacionPromedio;
 
-    // Constructor vacío (obligatorio para JPA)
+    // Constructor vacío
     public Book() {
     }
 

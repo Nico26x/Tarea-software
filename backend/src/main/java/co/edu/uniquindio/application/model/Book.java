@@ -1,39 +1,39 @@
 package co.edu.uniquindio.application.model;
 
 import jakarta.persistence.*;
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "libros")
+@Table(name = "books")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String titulo;
 
-    @Column(unique = true, nullable = false)
-    private String isbn;
+    @Column(nullable = false)
+    private String autor;
 
-    @ManyToOne
-    @JoinColumn(name = "autor_id")
-    @JsonIgnoreProperties("libros")
-    private Autor autor;
+    private Double precio;
 
-    @OneToMany(mappedBy = "libro", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("libro")
-    private List<Resena> resenas;
+    private Double calificacionPromedio;
 
-    @OneToMany(mappedBy = "libro", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("libro")
-    private List<Calificacion> calificaciones;
+    // Constructor vacío
+    public Book() {
+    }
 
-    public Book() {}
+    public Book(String titulo, String autor, Double precio, Double calificacionPromedio) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.precio = precio;
+        this.calificacionPromedio = calificacionPromedio;
+    }
 
-    public Integer getId() {
+    // Getters y Setters
+
+    public Long getId() {
         return id;
     }
 
@@ -45,35 +45,27 @@ public class Book {
         this.titulo = titulo;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public Autor getAutor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(Autor autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 
-    public List<Resena> getResenas() {
-        return resenas;
+    public Double getPrecio() {
+        return precio;
     }
 
-    public void setResenas(List<Resena> resenas) {
-        this.resenas = resenas;
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
-    public List<Calificacion> getCalificaciones() {
-    return calificaciones;
+    public Double getCalificacionPromedio() {
+        return calificacionPromedio;
     }
 
-    public void setCalificaciones(List<Calificacion> calificaciones) {
-    this.calificaciones = calificaciones;
+    public void setCalificacionPromedio(Double calificacionPromedio) {
+        this.calificacionPromedio = calificacionPromedio;
     }
 }

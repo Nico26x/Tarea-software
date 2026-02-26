@@ -1,27 +1,31 @@
 package co.edu.uniquindio.application.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import co.edu.uniquindio.application.model.Book;
+import co.edu.uniquindio.application.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import co.edu.uniquindio.application.model.Book;
-import co.edu.uniquindio.application.repository.BookRepository;
-
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/books")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
 
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookService bookService;
 
-    @GetMapping
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
-    @PostMapping
-    public Book createBook(@RequestBody Book book) {
-        return bookRepository.save(book);
+    // Obtener todos los libros
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookService.getAllBooks();
+    }
+
+    // Buscar por palabra o frase
+    @GetMapping("/search")
+    public List<Book> searchBooks(@RequestParam String query) {
+        return bookService.searchBooks(query);
     }
 }

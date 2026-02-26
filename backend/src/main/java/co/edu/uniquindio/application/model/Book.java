@@ -1,9 +1,11 @@
 package co.edu.uniquindio.application.model;
 
 import jakarta.persistence.*;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "libros") // debe coincidir EXACTAMENTE con el nombre de la tabla en MariaDB
+@Table(name = "libros")
 public class Book {
 
     @Id
@@ -16,18 +18,23 @@ public class Book {
     @Column(unique = true, nullable = false)
     private String isbn;
 
-    // Constructor vacío (OBLIGATORIO para JPA)
-    public Book() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    @JsonIgnoreProperties("libros")
+    private Autor autor;
 
-    // Getters y Setters
+    @OneToMany(mappedBy = "libro", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("libro")
+    private List<Resena> resenas;
+
+    @OneToMany(mappedBy = "libro", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("libro")
+    private List<Calificacion> calificaciones;
+
+    public Book() {}
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitulo() {
@@ -44,5 +51,29 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public List<Resena> getResenas() {
+        return resenas;
+    }
+
+    public void setResenas(List<Resena> resenas) {
+        this.resenas = resenas;
+    }
+
+    public List<Calificacion> getCalificaciones() {
+    return calificaciones;
+    }
+
+    public void setCalificaciones(List<Calificacion> calificaciones) {
+    this.calificaciones = calificaciones;
     }
 }
